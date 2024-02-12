@@ -93,19 +93,18 @@ def subscribe(request):
 class Pagination:
     def __init__(self, blogs, num):
         self.currpage = 1
-        self.blogs = list(blogs)
-        n = len(self.blogs)
         self.ans = []
+        blogs = list(blogs)
+        n = len(blogs)
         while n - num >= 0:
             box = []
             for i in range(num):
-                blog = self.blogs[0]
-                self.blogs.remove(self.blogs[0])
+                blog = blogs.pop(0)
                 box.append(blog)
             self.ans.append(tuple(box))
             n -= num
         if n > 0:
-            self.ans.append(tuple(self.blogs))
+            self.ans.append(tuple(blogs))
 
     def get_page(self, page):
         if len(self.ans) >= int(page):
