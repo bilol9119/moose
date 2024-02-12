@@ -11,8 +11,9 @@ def home_view(request):
         subscribe(request)
         return redirect('/')
 
-    blogs = Blog.objects.all()
-    context = {'blogs': blogs}
+    blogs = Blog.objects.all().order_by('-created_at')[:3]
+    context = {'blogs': blogs,
+               'homeactive' : 'active'}
     return render(request, 'index.html', context)
 
 
@@ -31,7 +32,7 @@ def blog_view(request):
 
     blogs = paginator.get_page(page_number)
 
-    context = {'page': paginator,  'blogs': blogs}
+    context = {'page': paginator,  'blogs': blogs, 'blogactive': 'active'}
 
     return render(request, 'blog.html', context)
 
@@ -49,14 +50,16 @@ def contact_view(request):
         data.save()
 
         return redirect('contact')
-    return render(request, 'contact.html')
+    context = {'contactactive': 'active'}
+    return render(request, 'contact.html', context=context)
 
 
 def about_view(request):
     if request.method == "POST":
         subscribe(request)
         return redirect('about')
-    return render(request, 'about.html')
+    context = {'aboutactive': 'active'}
+    return render(request, 'about.html', context=context)
 
 
 def blog_single_view(request, id):
@@ -74,7 +77,7 @@ def blog_single_view(request, id):
 def subscribe(request):
     email = request.POST.get('email')
     if email:
-        try :
+        try:
             validate_email(email)
         except ValidationError:
             pass
@@ -110,10 +113,12 @@ class Pagination:
         if len(self.ans) >= int(page):
             self.currpage = int(page)
             return self.ans[int(page)-1]
+        return []
 
     def has_previous(self):
         if self.currpage - 1 >= 1:
             return True
+        return False
 
     def previous(self):
         return self.currpage-1
@@ -131,6 +136,7 @@ class Pagination:
     def has_next(self):
         if self.currpage + 1 <= len(self.ans):
             return True
+        return False
 
     def next(self):
         return self.currpage + 1
