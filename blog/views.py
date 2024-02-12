@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog, Contact, Subscriptions, Comment
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator
 # Create your views here.
 import random
 
@@ -17,7 +16,6 @@ def home_view(request):
     return render(request, 'index.html', context)
 
 
-
 def blog_view(request):
     data = request.GET.get('cat')
     if data:
@@ -27,13 +25,13 @@ def blog_view(request):
 
     items_per_page = 3
 
-    paginator = Paginator(all_blogs, items_per_page)
+    paginator = Pagination(all_blogs, items_per_page)
 
     page_number = request.GET.get('page', 1)
 
-    page = paginator.get_page(page_number)
+    blogs = paginator.get_page(page_number)
 
-    context = {'page': page,  'blogs': page.object_list}
+    context = {'page': paginator,  'blogs': blogs}
 
     return render(request, 'blog.html', context)
 
@@ -59,6 +57,7 @@ def about_view(request):
         subscribe(request)
         return redirect('about')
     return render(request, 'about.html')
+
 
 def blog_single_view(request, id):
     if request.method == "POST":
@@ -91,3 +90,48 @@ def subscribe(request):
                 pass
 
 
+class Pagination:
+    def __init__(self, blogs, num):
+        self.currpage = 1
+        self.blogs = list(blogs)
+        n = len(self.blogs)
+        self.ans = []
+        while n - num >= 0:
+            box = []
+            for i in range(num):
+                blog = self.blogs[0]
+                self.blogs.remove(self.blogs[0])
+                box.append(blog)
+            self.ans.append(tuple(box))
+            n -= num
+        if n > 0:
+            self.ans.append(tuple(self.blogs))
+
+    def get_page(self, page):
+        if len(self.ans) >= int(page):
+            self.currpage = int(page)
+            return self.ans[int(page)-1]
+
+    def has_previous(self):
+        if self.currpage - 1 >= 1:
+            return True
+
+    def previous(self):
+        return self.currpage-1
+
+    def page_range(self):
+        page = range(1, len(self.ans)+1)
+        return page
+
+    def object_list(self):
+        return self.ans
+
+    def curr_page(self):
+        return self.currpage
+
+    def has_next(self):
+        if self.currpage + 1 <= len(self.ans):
+            return True
+
+    def next(self):
+        return self.currpage + 1

@@ -51,21 +51,21 @@
         <div class="block-27">
             <ul>
                 {% if page.has_previous %}
-                    <li><a href="?page=1">&lt;</a></li>
+                    <li><a href="?page={{ page.previous }}">&lt;</a></li>
                 {% else %}
                     <li class="disabled"><span>&lt;</span></li>
                 {% endif %}
 
-                {% for page_num in page.paginator.page_range %}
-                    {% if page_num == page.number %}
-                        <li class="active"><span>{{ page_num }}</span></li>
+                {% for i in page.page_range %}
+                    {% if i == page.curr_page %}
+                        <li class="active"><span>{{ i }}</span></li>
                     {% else %}
-                        <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
                     {% endif %}
                 {% endfor %}
 
                 {% if page.has_next %}
-                    <li><a href="?page={{ page.paginator.num_pages }}">&gt;</a></li>
+                    <li><a href="?page={{ page.next }}">&gt;</a></li>
                 {% else %}
                     <li class="disabled"><span>&gt;</span></li>
                 {% endif %}
