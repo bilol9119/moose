@@ -115,7 +115,17 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+AWS_ACCESS_KEY_ID = 'DO00FMHAKFCE6LRAEZCW'
+AWS_SECRET_ACCESS_KEY = 'ItiX5qd62nXLki+vL8bZTfXBvJxdlN59pZv0d1yGOA4'
+AWS_STORAGE_BUCKET_NAME = 'uzmovie'
+AWS_S3_CUSTOM_DOMAIN = 'https://quloq.uz.fra1.digitaloceanspaces.com'
+
 STATIC_URL = 'static/'
+MEDIA_URL = 'https://quloq.uz.fra1.digitaloceanspaces.com/media/'
+
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
@@ -123,6 +133,5 @@ STATICFILES_DIRS = [
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
-MEDIA_URL = 'media/'
 MEDIA_ROOT = 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
