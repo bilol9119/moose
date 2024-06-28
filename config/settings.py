@@ -115,10 +115,10 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-AWS_ACCESS_KEY_ID = 'DO00X7KW2E8Q4EQGGRCW'
-AWS_SECRET_ACCESS_KEY = 'iRMinMjTiKzcY7ThShPihKgpcR9dSp6rIcBFyK+0evA'
-AWS_STORAGE_BUCKET_NAME = 'uzmovie'
-AWS_S3_CUSTOM_DOMAIN = 'https://quloq.uz.fra1.digitaloceanspaces.com'
+MEDIA_S3_ACCESS_KEY_ID = 'DO00X7KW2E8Q4EQGGRCW'
+MEDIA_S3_SECRET_ACCESS_KEY = 'iRMinMjTiKzcY7ThShPihKgpcR9dSp6rIcBFyK+0evA'
+MEDIA_S3_BUCKET_NAME = 'uzmovie'
+MEDIA_HOST = 'https://quloq.uz.fra1.digitaloceanspaces.com'
 
 STATIC_URL = 'static/'
 MEDIA_URL = 'https://quloq.uz.fra1.digitaloceanspaces.com/media/'
