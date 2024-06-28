@@ -124,8 +124,8 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'https://quloq.uz.fra1.digitaloceanspaces.com/media/'
 
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'config.storages_backend.PublicMediaStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
